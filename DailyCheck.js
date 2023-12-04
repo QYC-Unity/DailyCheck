@@ -1,3 +1,6 @@
+/*
+cron "40 9 * * *" DailyCheck.js, tag=每日签到合集
+*/
 const yaml = require("js-yaml");
 const fs = require('fs');
 let QL = process.env.QL_DIR
