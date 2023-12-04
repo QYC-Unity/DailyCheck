@@ -4,7 +4,7 @@ const yargs = require('yargs');
 const axios= require('axios');
 var argv = yargs.argv;
 let QL = process.env.QL_DIR
-config = null, notify = null, sendmsg = null, signlist = [], logs = "", needPush = false
+config = null, notify = null, signlist = [], logs = "", needPush = false
 if (fs.existsSync("./sendNotify.js")) notify = require('./sendNotify')
 
 //自行添加任务 名字看脚本里的文件名 比如csdn.js 就填"csdn"
@@ -15,10 +15,10 @@ async function go() {
         if (fs.existsSync("./DailyCheck_config.yml")) config = yaml.load(fs.readFileSync('./DailyCheck_config.yml', 'utf8'));
         if (QL) {
             console.log("当前是青龙面板,路径：" + QL)
-            if (fs.existsSync(`/${QL}/data/config/config.sh`)) console.log("建议更新到最新版青龙再来运行哦,或者手动修改路径叭~")
+            if (fs.existsSync(`/${QL}/data/config/DailyCheck_config.sh`)) console.log("建议更新到最新版青龙再来运行哦,或者手动修改路径叭~")
             cbList = process.env.cbList ? process.env.cbList.split("&") : []
-            if (!fs.existsSync(`/${QL}/data/config/config.yml`)) {
-                console.log("您还没有填写cookies配置文件,请配置好再来运行8...\n配置文件路径/ql/data/config/config.yml\n如没有文件复制一份config.yml.temple并改名为config.yml")
+            if (!fs.existsSync(`/${QL}/data/config/DailyCheck_config.yml`)) {
+                console.log("您还没有填写cookies配置文件,请配置好再来运行8...\n配置文件路径/ql/data/config/DailyCheck_config.yml\n如没有文件复制一份DailyCheck_config.yml.temple并改名为DailyCheck_config.yml")
                 return;
             } else {
                 if (yaml.load) config = yaml.load(fs.readFileSync(`/${QL}/data/config/config.yml`, 'utf8'))
@@ -27,12 +27,9 @@ async function go() {
         }
 
     }
-    if (config && config.Push) sendmsg = require("./sendmsg")
     if (config) signlist = config.cbList.split("&")
     if (config && config.needPush) needPush = true   
-    var signList = (argv._.length) > 0 ? argv._ : (cbList.length > 0 ? cbList : signlist)
-    if (config && process.env.TENCENTCLOUD_RUNENV != "SCF") start(signList);
-    else console.log("哈哈哈")
+    var signList = cbList.length > 0 ? cbList : signlist
 }
 
 function start(taskList) {
@@ -54,8 +51,7 @@ function start(taskList) {
                 }
             }
             console.log("------------任务执行完毕------------\n");
-            if (needPush && sendmsg) await sendmsg(logs);
-            if (needPush && notify) await notify.sendNotify("签到盒", `${logs}\n\n吹水群：https://t.me/htuoypa`);
+            if (needPush && notify) await sendmsg(logs);
         } catch (err) {
             console.log(err);
         }
@@ -63,27 +59,8 @@ function start(taskList) {
     });
 }
 
-function getCF(ycurl) {
-    return new Promise(async (resolve) => {
-        try {
-            console.log("------------开始获取远程配置文件------------");
-            let rr = await axios.get(ycurl)
-            if (rr && rr.data)  rconfig = rr.data
-            
-            if (rconfig.match(/cbList/)) {
-                console.log("------------获取远程配置文件成功------------")
-                config = yaml.load(rconfig)
-                //   console.log(config)
-            } else {
-                console.log("远程配置文件有误")
-                return;
-            }
-        } catch (err) {
-            console.log(err);
-            console.log("远程配置文件有误")
-        }
-        resolve();
-    });
+function sendmsg(msg){
+    await notify.sendNotify(`每日签到任务完成`, msg.replace(/\n/g,"\n\n"))
 }
 
 go()
