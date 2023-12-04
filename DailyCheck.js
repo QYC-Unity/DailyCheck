@@ -7,10 +7,9 @@ if (fs.existsSync("./sendNotify.js")) notify = require('./sendNotify')
 //自行添加任务 名字看脚本里的文件名 比如linkai.js 就填"linkai"
 var cbList = []
 async function go() {
-    if (fs.existsSync("./DailyCheck_config.yml")) config = yaml.load(fs.readFileSync('./DailyCheck_config.yml', 'utf8'));
     if (QL) {
         console.log("当前是青龙面板,路径：" + QL)
-        if (fs.existsSync(`/${QL}/data/config/DailyCheck_config.sh`)) console.log("建议更新到最新版青龙再来运行哦,或者手动修改路径叭~")
+        if (fs.existsSync(`/${QL}/data/config/config.sh`)) console.log("建议更新到最新版青龙再来运行哦,或者手动修改路径叭~")
         cbList = process.env.cbList ? process.env.cbList.split("&") : []
         if (!fs.existsSync(`/${QL}/data/config/DailyCheck_config.yml`)) {
             console.log("您还没有填写cookies配置文件,请配置好再来运行8...\n配置文件路径/ql/data/config/DailyCheck_config.yml\n如没有文件复制一份DailyCheck_config.yml.temple并改名为DailyCheck_config.yml")
@@ -56,7 +55,7 @@ async function sendmsg(msg){
     await notify.sendNotify(`每日签到任务完成`, msg.replace(/\n/g,"\n\n"))
 }
 
-go()
 !(async () => {
+    await go();
     await start(signList);
 })()
