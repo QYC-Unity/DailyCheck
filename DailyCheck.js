@@ -9,7 +9,6 @@ var cbList = []
 async function go() {
     if (QL) {
         console.log("当前是青龙面板,路径：" + QL)
-        if (fs.existsSync(`/${QL}/data/config/config.sh`)) console.log("建议更新到最新版青龙再来运行哦,或者手动修改路径叭~")
         cbList = process.env.cbList ? process.env.cbList.split("&") : []
         if (!fs.existsSync(`/${QL}/data/config/DailyCheck_config.yml`)) {
             console.log("您还没有填写cookies配置文件,请配置好再来运行8...\n配置文件路径/ql/data/config/DailyCheck_config.yml\n如没有文件复制一份DailyCheck_config.yml.temple并改名为DailyCheck_config.yml")
@@ -19,9 +18,10 @@ async function go() {
             else console.log("亲,您的依赖掉啦,但是没有完全掉 请重装依赖\npnpm install  axios crypto-js fs js-yaml\n或者\nnpm install  axios crypto-js fs js-yaml")
         }
     }
-    if (config) signlist = config.cbList.split("&")
+    if (config) var configlist = config.cbList.split("&")
     if (config && config.needPush) needPush = true   
-    var signList = cbList.length > 0 ? cbList : signlist
+    signList = cbList.length > 0 ? cbList : configlist
+    await start(signList)
 }
 
 function start(taskList) {
@@ -57,5 +57,4 @@ async function sendmsg(msg){
 
 !(async () => {
     await go();
-    await start(signList);
 })()
