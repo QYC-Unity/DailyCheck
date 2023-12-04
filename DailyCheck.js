@@ -16,7 +16,7 @@ async function go() {
             console.log("您还没有填写cookies配置文件,请配置好再来运行8...\n配置文件路径/ql/data/config/DailyCheck_config.yml\n如没有文件复制一份DailyCheck_config.yml.temple并改名为DailyCheck_config.yml")
             return;
         } else {
-            if (yaml.load) config = yaml.load(fs.readFileSync(`/${QL}/data/config/config.yml`, 'utf8'))
+            if (yaml.load) config = yaml.load(fs.readFileSync(`/${QL}/data/config/DailyCheck_config.yml`, 'utf8'))
             else console.log("亲,您的依赖掉啦,但是没有完全掉 请重装依赖\npnpm install  axios crypto-js fs js-yaml\n或者\nnpm install  axios crypto-js fs js-yaml")
         }
     }
