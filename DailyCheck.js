@@ -1,13 +1,12 @@
 const yaml = require("js-yaml");
 const fs = require('fs');
-const yargs = require('yargs');
 const axios= require('axios');
 var argv = yargs.argv;
 let QL = process.env.QL_DIR
 config = null, notify = null, signlist = [], logs = "", needPush = false
 if (fs.existsSync("./sendNotify.js")) notify = require('./sendNotify')
 
-//自行添加任务 名字看脚本里的文件名 比如csdn.js 就填"csdn"
+//自行添加任务 名字看脚本里的文件名 比如linkai.js 就填"linkai"
 var cbList = []
 async function go() {
     if (ycurl) await getCF(ycurl)
@@ -22,7 +21,7 @@ async function go() {
                 return;
             } else {
                 if (yaml.load) config = yaml.load(fs.readFileSync(`/${QL}/data/config/config.yml`, 'utf8'))
-                else console.log("亲,您的依赖掉啦,但是没有完全掉 请重装依赖\npnpm install  axios crypto crypto-js fs iconv-lite js-yaml yargs\n或者\nnpm install  axios crypto crypto-js fs iconv-lite js-yaml yargs")
+                else console.log("亲,您的依赖掉啦,但是没有完全掉 请重装依赖\npnpm install  axios crypto crypto-js fs iconv-lite js-yaml\n或者\nnpm install  axios crypto crypto-js fs iconv-lite js-yaml yargs")
             }
         }
 
