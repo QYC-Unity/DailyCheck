@@ -23,7 +23,7 @@ function right() {
       msg =`签到失败，原因：${error.message}`;
     }
     console.log(msg)
-    //resolve("【right】：" + msg);
+    resolve("【right】：" + msg);
   });
 }
 module.exports = right;
