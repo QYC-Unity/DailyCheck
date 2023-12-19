@@ -8,21 +8,22 @@ function right() {
   
       const response = await axios.get(url, {
         headers: {
-          User-Agent: agent,
+          'User-Agent': agent,
           Cookie: token,
         },
       });
-      console.log(response.data)
-      if (response.data.success) {
-        msg = `签到成功，获得 ${response.data.data.score} 积分`;
+      if (response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1) {
+        coin = response.data.match("恩山币: </em>(.*?)nb &nbsp;")[1]
+        point = response.data.match("<em>积分: </em>(.*?)<span")[1]
+        msg = `签到成功\n恩山币：${coin}\n积分：${point}`;
       } else {
-        msg = `签到失败，原因：${response.data.message}`;
+        msg = `签到失败`;
       }
-      console.log(msg)
     } catch (error) {
       msg =`签到失败，原因：${error.message}`;
     }
-    resolve("【right】：" + msg);
+    console.log(msg)
+    //resolve("【right】：" + msg);
   });
 }
 module.exports = right;
