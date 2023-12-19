@@ -1,5 +1,5 @@
 const axios = require("axios");
-function checkin() { 
+function right() { 
   return new Promise(async (resolve) => {
     try {
       const url = 'www.right.com.cn';
