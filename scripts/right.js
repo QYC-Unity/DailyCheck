@@ -4,7 +4,7 @@ function right() {
     try {
       const url = 'https://www.right.com.cn/FORUM/home.php?mod=spacecp&ac=credit&showcredit=1';
       const token = config.right.Cookie;
-      const agent = config.right.User-Agent;
+      const agent = config.right.UserAgent;
   
       const response = await axios.get(url, {
         headers: {
