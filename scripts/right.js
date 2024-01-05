@@ -13,7 +13,7 @@ function right() {
         },
       });
       if (response.status == 200 && response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1) {
-        coin = response.data.match("恩山币: </em>(.*?)nb &nbsp;")[1]
+        coin = response.data.match("恩山币: </em>(.*?) &nbsp;")[1]
         point = response.data.match("<em>积分: </em>(.*?)<span")[1]
         msg = `签到成功\n恩山币：${coin}\n积分：${point}`;
       } else {
