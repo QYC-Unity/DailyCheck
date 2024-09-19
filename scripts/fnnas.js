@@ -15,7 +15,7 @@ function fnnas() {
       if (response.status == 200 && response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1) {
         coin = response.data.match("飞牛币: </em>(.*?) &nbsp;")[1]
         point = response.data.match("<em>积分: </em>(.*?)<span")[1]
-        msg = `登录成功\n飞牛币：${coin}\n积分：${point}`;
+        msg = `登录成功\n飞牛币：${coin}\n积分：${point}\n`;
         await sign();
       } else {
         msg = `登录失败`;
@@ -37,13 +37,13 @@ async function sign() {
       },
     });
     if (response.status == 200 && response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1&& response.data.search("已经打过卡") == -1) {
-      msg = `签到成功`;
+      msg += `签到成功`;
     }
     else {
-      msg = "签到失败"
+      msg += "签到失败"
     }
   } catch (error) {
-    msg =`签到失败，原因：${error.message}`;
+    msg +=`签到失败，原因：${error.message}`;
   }
 }
 module.exports = fnnas;
