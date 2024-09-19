@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const token = config.right.Cookie;
+const token = config.fnnas.Cookie;
 const agent = config.UserAgent;
 function fnnas() { 
   return new Promise(async (resolve) => {
