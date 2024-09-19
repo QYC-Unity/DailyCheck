@@ -16,7 +16,7 @@ function fnnas() {
         coin = response.data.match("飞牛币: </em>(.*?) &nbsp;")[1]
         point = response.data.match("<em>积分: </em>(.*?)<span")[1]
         msg = `登录成功\n飞牛币：${coin}\n积分：${point}`;
-        await sign()
+        await sign();
       } else {
         msg = `登录失败`;
       }
@@ -41,7 +41,6 @@ async function sign() {
           msg = `签到成功`;
       }
       else {
-          console.log(`${name}，签到失败，${res.data.message}!`)
           msg = "签到失败"
       }
     } catch (error) {
