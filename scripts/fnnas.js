@@ -48,6 +48,7 @@ async function sign() {
         } catch (error) {
             msg =`签到失败，原因：${error.message}`;
         }
+        resolve(msg);
     });
 }
 module.exports = fnnas;
