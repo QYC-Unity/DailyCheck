@@ -28,24 +28,22 @@ function fnnas() {
   });
 }
 async function sign() {
-  return new Promise(async (resolve) => {
-    try {
-      const url = 'https://club.fnnas.com/plugin.php?id=zqlj_sign&sign=30879e66';
-      const response = await axios.get(url, {
-        headers: {
-          'User-Agent': agent,
-          Cookie: token,
-        },
-      });
-      if (response.status == 200 && response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1&& response.data.search("已经打过卡") == -1) {
-        msg = `签到成功`;
-      }
-      else {
-        msg = "签到失败"
-      }
-    } catch (error) {
-      msg =`签到失败，原因：${error.message}`;
+  try {
+    const url = 'https://club.fnnas.com/plugin.php?id=zqlj_sign&sign=30879e66';
+    const response = await axios.get(url, {
+      headers: {
+        'User-Agent': agent,
+        Cookie: token,
+      },
+    });
+    if (response.status == 200 && response.data.search("登录失败") == -1 && response.data.search("密码错误") == -1&& response.data.search("已经打过卡") == -1) {
+      msg = `签到成功`;
     }
-  });
+    else {
+      msg = "签到失败"
+    }
+  } catch (error) {
+    msg =`签到失败，原因：${error.message}`;
+  }
 }
 module.exports = fnnas;
